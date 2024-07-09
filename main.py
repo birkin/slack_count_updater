@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-HH_COUNT_JSON_PATH = os.environ['HH_COUNT_JSON_PATH']
+HH_COUNT_JSON_PATH = os.getenv( 'HH_COUNT_JSON_PATH' )
 
 ## grap api data
 items_url = 'https://repository.library.brown.edu/api/search/?q=rel_is_member_of_collection_ssim:%22bdr:wum3gm43%22&rows=0'
@@ -21,8 +21,9 @@ data = { 'items_count': items_count, 'orgs_count': orgs_count }
 json_data: str = json.dumps( data, indent=2, sort_keys=True )
 
 ## save and output
-with open(HH_COUNT_JSON_PATH, 'w') as f:
-    f.write(json_data)
+if HH_COUNT_JSON_PATH:
+    with open(HH_COUNT_JSON_PATH, 'w') as f:
+        f.write(json_data)
 print( json_data )
 
 ## eof
